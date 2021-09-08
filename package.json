@@ -9,6 +9,7 @@
     "clean": "npm run clean:hexo && npm run clean:yuque",
     "clean:hexo": "hexo clean",
     "clean:yuque": "yuque-hexo clean",
+    "webhook-server": "node webhook-server.js",
     "deploy": "npm run clean && npm run sync && npm run build"
   },
   "hexo": {

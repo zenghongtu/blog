@@ -1,3 +1,2 @@
-git fetch --all
-git reset --hard origin/main
+git pull
 npm run deploy

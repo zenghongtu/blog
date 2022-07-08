@@ -5,7 +5,7 @@
 # Link to a page that gives an overview of all your projects.
 # This can be an external link (e.g., to you GitHub profile) or to another
 # page within your website.
-projects_url: http://github.com/zenghongtu
+projects_url: https://github.com/zenghongtu
 
 # Set the page direction to RTL or LTR. default is LTR. (if you set it 'rtl', the 'vazir' font will be loaded.)
 direction: ltr
@@ -17,7 +17,7 @@ nav:
   home: /
   about: /about/
   articles: /archives/
-  projects: http://github.com/zenghongtu
+  projects: https://github.com/zenghongtu
 
 
 # Links to your social media accounts.
@@ -25,7 +25,7 @@ nav:
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
-  github: http://github.com/zenghongtu
+  github: https://github.com/zenghongtu
   # twitter: /
   # facebook: /
   # linkedin: /
@@ -57,13 +57,13 @@ archive:
 # Options:
 #   - show_updated: show the last modification date.
 post:
-  show_updated: false
+  show_updated: true
 
 # Customize the copyright years
 # Note: if start_year/end_year not provided, will use current year.
 copyright:
-  start_year: 2022
-  end_year:
+  start_year: 2019
+  end_year: 2022
 
 ##############################################################################
 # Look and Feel
@@ -81,7 +81,7 @@ logo:
   enabled: true
   width: 50
   height: 50
-  url: https://avatars.githubusercontent.com/u/25629121?v=4
+  url: /images/avatar.png
   gravatar: false
   grayout: false
 

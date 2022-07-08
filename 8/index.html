@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言：之前在项目中我都会使用 https:&#x2F;&#x2F;github.com&#x2F;contiamo&#x2F;restful-react 从Swagger生成接口代码，省了很多对接口的时间。本以为就这样了，直到我遇到了 https:&#x2F;&#x2F;github.com&#x2F;fabien0102&#x2F;openapi-codegen，才知道什么才是真的香~ 这里来分享一下它是有多香。 新欢与旧爱我们先来说说  https:&#x2F;&#x2F;github.co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 openapi-codegen 生成 React Query 代码，真香~">
+<meta property="og:url" content="https://blog.zenghongtu.com/8/index.html">
+<meta property="og:site_name" content="Zenghongtu&#39;s Blog">
+<meta property="og:description" content="前言：之前在项目中我都会使用 https:&#x2F;&#x2F;github.com&#x2F;contiamo&#x2F;restful-react 从Swagger生成接口代码，省了很多对接口的时间。本以为就这样了，直到我遇到了 https:&#x2F;&#x2F;github.com&#x2F;fabien0102&#x2F;openapi-codegen，才知道什么才是真的香~ 这里来分享一下它是有多香。 新欢与旧爱我们先来说说  https:&#x2F;&#x2F;github.co">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/172883573-7b055272-ae57-45de-8b65-170b72ab1bfb.png">
+<meta property="article:published_time" content="2022-06-09T07:36:59.000Z">
+<meta property="article:modified_time" content="2022-07-08T05:53:45.000Z">
+<meta property="article:author" content="Jason Zeng">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="技巧">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/25629121/172883573-7b055272-ae57-45de-8b65-170b72ab1bfb.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+        
+      
+    
+    <!-- title -->
+    <title>用 openapi-codegen 生成 React Query 代码，真香~</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Zenghongtu&#39;s Blog" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://jasonzeng.dev">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/8/&text=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/8/&is_video=false&description=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用 openapi-codegen 生成 React Query 代码，真香~&body=Check out this article: https://blog.zenghongtu.com/8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/8/&name=用 openapi-codegen 生成 React Query 代码，真香~&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/8/&t=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%AC%A2%E4%B8%8E%E6%97%A7%E7%88%B1"><span class="toc-number">1.</span> <span class="toc-text">新欢与旧爱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">上手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%85%E6%94%B9%E8%BF%9B"><span class="toc-number">3.</span> <span class="toc-text">待改进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">4.</span> <span class="toc-text">小结一下</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        用 openapi-codegen 生成 React Query 代码，真香~
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jason Zeng</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-06-09T07:36:59.000Z" itemprop="datePublished">2022-06-09</time>
+        
+        (Updated: <time datetime="2022-07-08T05:53:45.000Z" itemprop="dateModified">2022-07-08</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a>, <a class="tag-link-link" href="/tags/%E6%8A%80%E5%B7%A7/" rel="tag">技巧</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>前言：之前在项目中我都会使用 <a target="_blank" rel="noopener" href="https://github.com/contiamo/restful-react">https://github.com/contiamo/restful-react</a> 从Swagger生成接口代码，省了很多对接口的时间。本以为就这样了，直到我遇到了 <a target="_blank" rel="noopener" href="https://github.com/fabien0102/openapi-codegen%EF%BC%8C%E6%89%8D%E7%9F%A5%E9%81%93%E4%BB%80%E4%B9%88%E6%89%8D%E6%98%AF%E7%9C%9F%E7%9A%84%E9%A6%99">https://github.com/fabien0102/openapi-codegen，才知道什么才是真的香</a>~ 这里来分享一下它是有多香。</p>
+<h2 id="新欢与旧爱"><a href="#新欢与旧爱" class="headerlink" title="新欢与旧爱"></a>新欢与旧爱</h2><p>我们先来说说  <a target="_blank" rel="noopener" href="https://github.com/contiamo/restful-react">https://github.com/contiamo/restful-react</a> ， 它虽然解决了接口问题，但也存在非常明显的缺点，数据请求处理这一层太弱，仅仅是在<code>fetch</code>上做了简单的封装，没有办法支持复杂的处理，如二次请求、缓存等，需要自己去做处理，麻烦且成本不低。<br>它的作者也是发现了这个问题，就开了新坑 <a target="_blank" rel="noopener" href="https://github.com/fabien0102/openapi-codegen">https://github.com/fabien0102/openapi-codegen</a> ， 使用 React 当红炸子鸡 – <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/comparison">React Query</a> 来做数据请求，这样在支持接口生成的同时，能够支持非常强大的数据处理能力。</p>
+<h2 id="上手"><a href="#上手" class="headerlink" title="上手"></a>上手</h2><p><a target="_blank" rel="noopener" href="https://github.com/fabien0102/openapi-codegen%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%B8%B8%E7%AE%80%E5%8D%95%EF%BC%8C%E4%B8%A4%E6%9D%A1%E5%91%BD%E4%BB%A4%E4%B8%80%E6%95%B2%E5%B0%B1%E5%AE%8C%E6%88%90%E4%BA%86%E5%88%9D%E5%A7%8B%E5%8C%96">https://github.com/fabien0102/openapi-codegen的使用非常简单，两条命令一敲就完成了初始化</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -D @openapi-codegen/&#123;cli,typescript&#125;</span><br><span class="line">$ npx openapi-codegen init</span><br></pre></td></tr></table></figure>
+<p>根据命令提示输入，会得到这几个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">openapi-codegen.config.ts</span><br><span class="line"></span><br><span class="line">├── ewyaComponents.ts</span><br><span class="line">├── ewyaContext.ts</span><br><span class="line">├── ewyaFetcher.ts</span><br><span class="line">└── ewyaSchemas.ts</span><br></pre></td></tr></table></figure>
+<p><code>openapi-codegen.config.ts</code>是保存了我们生成接口的一些配置，如果有多个后端swagger，可以在这个里面配置。<br><code>ewyaComponents</code>是我们可以直接使用的组件，<br><code>ewyaContext</code>包含了一些配置，<br><code>ewyaFetcher</code>是封装了<code>fetch</code>请求给<code>react-query</code>使用，<br><code>ewyaSchemas</code>中保存了ts类型</p>
+<p>剩下的就跟 react-query 的使用基本一致了，我这里因为要在多个子项目里面使用就把它封装到了一个组件里面。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">QueryClient</span>, <span class="title class_">QueryClientProvider</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-query&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryClient = <span class="keyword">new</span> <span class="title class_">QueryClient</span>(&#123;</span><br><span class="line">	<span class="attr">defaultOptions</span>: &#123;</span><br><span class="line">		<span class="attr">queries</span>: &#123;</span><br><span class="line">			<span class="attr">refetchOnWindowFocus</span>: <span class="literal">false</span>,</span><br><span class="line">			<span class="attr">retry</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">retryDelay</span>: <span class="function">(<span class="params">attempt</span>) =&gt;</span> attempt * <span class="number">2000</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">index</span> = (<span class="params">&#123; children &#125;</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">QueryClientProvider</span> <span class="attr">client</span>=<span class="string">&#123;queryClient&#125;</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">QueryClientProvider</span>&gt;</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> index;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以在<code>ewyaFetcher</code>中对接口状态码进行判断，处理一些业务逻辑，如错误提示、刷新cookie等</p>
+<img src="https://user-images.githubusercontent.com/25629121/172883573-7b055272-ae57-45de-8b65-170b72ab1bfb.png" width="400px"/>
+
+
+<h2 id="待改进"><a href="#待改进" class="headerlink" title="待改进"></a>待改进</h2><p>当然它也有未完善的地方，比如说没有支持react-query的infinite hook，这里提供一个我的解决方案：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [todoQueryParams, setTodoQueryParams] = useState&lt;<span class="title class_">GetPendingUsingGET1QueryParams</span>&gt;(&#123;&#125;);</span><br><span class="line"><span class="keyword">const</span> [todoData, setTodoData] = useState&lt;<span class="title class_">TodoPage</span>&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">	<span class="attr">isLoading</span>: isTodoLoading,</span><br><span class="line">	<span class="attr">isFetching</span>: isTodoFetching,</span><br><span class="line">	<span class="attr">isError</span>: isTodoError,</span><br><span class="line">&#125; = <span class="title function_">useGetPendingUsingGET1</span>(</span><br><span class="line">	&#123; <span class="attr">queryParams</span>: todoQueryParams &#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="attr">keepPreviousData</span>: <span class="literal">true</span>,</span><br><span class="line">		<span class="attr">onSuccess</span>: <span class="function">(<span class="params">next</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 处理合并前次数据</span></span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h2><p>在新项目中使用下来，相对于其他swagger生成代码方案（Pont、openapi等）它使用起来简单很多，而且再结合上 react-query 的强大请求处理能力，相信你在用到项目中后也能感受到它真的香~</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://jasonzeng.dev">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects/">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%AC%A2%E4%B8%8E%E6%97%A7%E7%88%B1"><span class="toc-number">1.</span> <span class="toc-text">新欢与旧爱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">上手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%85%E6%94%B9%E8%BF%9B"><span class="toc-number">3.</span> <span class="toc-text">待改进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">4.</span> <span class="toc-text">小结一下</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/8/&text=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/8/&is_video=false&description=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用 openapi-codegen 生成 React Query 代码，真香~&body=Check out this article: https://blog.zenghongtu.com/8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/8/&title=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/8/&name=用 openapi-codegen 生成 React Query 代码，真香~&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/8/&t=用 openapi-codegen 生成 React Query 代码，真香~"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    Jason Zeng
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://jasonzeng.dev">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://lib.baomitu.com/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://lib.baomitu.com/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-96372784-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-96372784-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fbd1d453d3204739922289f06c5e1d7d"}'></script>
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'zenghongtu/blog';
+      var utterances_issue_number = location.pathname.split("/")[1];
+      var utterances_label = 'Comment';
+      var utterances_theme = 'boxy-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-number', utterances_issue_number);
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

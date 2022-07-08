@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言：这个需求在做完后感觉还是挺有意思的，这里小记一下，方便日后回顾。 初遇需求对面的产品只给我甩了一张图，然后问我能不能做出这种效果。  我一看这不就是 Camunda 的企业付费版功能，然后就去尝试找一下他们的实现。首先去注册了个Camunda账号，但是他们并没有开放这个功能的体验，而且在研究了一下他们的资料后，我猜测他们这个渲染可能是后端直接将热力图的数据加到bpmn图中，前端只是进行渲染。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在流程图中实现 Camunda 企业付费版的热力图展示">
+<meta property="og:url" content="https://blog.zenghongtu.com/4/index.html">
+<meta property="og:site_name" content="Zenghongtu&#39;s Blog">
+<meta property="og:description" content="前言：这个需求在做完后感觉还是挺有意思的，这里小记一下，方便日后回顾。 初遇需求对面的产品只给我甩了一张图，然后问我能不能做出这种效果。  我一看这不就是 Camunda 的企业付费版功能，然后就去尝试找一下他们的实现。首先去注册了个Camunda账号，但是他们并没有开放这个功能的体验，而且在研究了一下他们的资料后，我猜测他们这个渲染可能是后端直接将热力图的数据加到bpmn图中，前端只是进行渲染。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170877640-88e23cf0-93e5-4a0c-8c97-c89ee371571a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170918846-dc895d1b-aaac-48f7-b9b1-39e1a922ee83.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170919374-9f1c796f-a722-4dc3-b26a-253e13ce7a2a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170919916-63e9d3a3-3d4c-436d-ad1d-6fbc5bb87293.gif">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170921007-15aa7722-1fbd-4397-a13f-978748672328.gif">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170921144-6ff04b8e-ced4-4ee0-be4b-678c6fb71503.gif">
+<meta property="og:image" content="https://user-images.githubusercontent.com/25629121/170922097-36f54d19-2bc7-478e-8f4e-bd00b979fcd7.png">
+<meta property="article:published_time" content="2022-05-29T08:03:54.000Z">
+<meta property="article:modified_time" content="2022-07-08T01:15:51.000Z">
+<meta property="article:author" content="Jason Zeng">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/25629121/170877640-88e23cf0-93e5-4a0c-8c97-c89ee371571a.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+        
+      
+    
+    <!-- title -->
+    <title>在流程图中实现 Camunda 企业付费版的热力图展示</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Zenghongtu&#39;s Blog" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zenghongtu">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/4/&text=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/4/&is_video=false&description=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在流程图中实现 Camunda 企业付费版的热力图展示&body=Check out this article: https://blog.zenghongtu.com/4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/4/&name=在流程图中实现 Camunda 企业付费版的热力图展示&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/4/&t=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E9%81%87%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">初遇需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在流程图中实现 Camunda 企业付费版的热力图展示
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jason Zeng</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-29T08:03:54.000Z" itemprop="datePublished">2022-05-29</time>
+        
+        (Updated: <time datetime="2022-07-08T01:15:51.000Z" itemprop="dateModified">2022-07-08</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>前言：这个需求在做完后感觉还是挺有意思的，这里小记一下，方便日后回顾。</p>
+<h2 id="初遇需求"><a href="#初遇需求" class="headerlink" title="初遇需求"></a>初遇需求</h2><p>对面的产品只给我甩了一张图，然后问我能不能做出这种效果。</p>
+<p><img src="https://user-images.githubusercontent.com/25629121/170877640-88e23cf0-93e5-4a0c-8c97-c89ee371571a.png" alt="image"></p>
+<p>我一看这不就是 Camunda 的企业付费版功能，然后就去尝试找一下他们的实现。首先去注册了个Camunda账号，但是他们并没有开放这个功能的体验，而且在研究了一下他们的资料后，我猜测他们这个渲染可能是后端直接将热力图的数据加到bpmn图中，前端只是进行渲染。如果现在按照他们这种方式搞，后端工作量可能就不小，影响到其他需求的排期。</p>
+<p>既然他们的作法是热力图和流程图在一起渲染的，那我们能不能够让热力图是单独进行渲染呢？答案当然是可以的，heatmap.js 便能够基本满足我们的需求。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>后端先给每个关键点对应热力数值，我们将bpmn图进行渲染，渲染完成后获取每个关键点的x，y坐标，通过对偏移量的计算，在对应的关键点位置将热力画出来。</p>
+<p><strong>流程图渲染</strong> </p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bpmnViewer = (bpmnViewerRef.<span class="property">current</span> = <span class="keyword">new</span> <span class="title class_">BpmnViewer</span>(&#123;</span><br><span class="line">     <span class="attr">container</span>: <span class="string">&quot;#canvas&quot;</span></span><br><span class="line">   &#125;));</span><br><span class="line"></span><br><span class="line">   bpmnViewer</span><br><span class="line">     .<span class="title function_">importXML</span>(diagramXML)</span><br><span class="line">     .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">       bpmnViewer.<span class="title function_">get</span>(<span class="string">&quot;canvas&quot;</span>).<span class="title function_">zoom</span>(<span class="string">&quot;fit-viewport&quot;</span>);</span><br><span class="line">     &#125;)</span><br><span class="line">     .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">       <span class="title function_">heatmapRender</span>(heatmapData);</span><br><span class="line">     &#125;)</span><br><span class="line">     .<span class="title function_">catch</span>(<span class="function">(<span class="params">err: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;importXML err: &quot;</span>, err);</span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>heatmap 基本渲染</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> heatmapRender = <span class="title function_">useCallback</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> bpmnViewer = bpmnViewerRef.<span class="property">current</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> points = [];</span><br><span class="line">    <span class="keyword">const</span> elementRegistry = bpmnViewer.<span class="title function_">get</span>(<span class="string">&quot;elementRegistry&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> viewBox = bpmnViewer.<span class="title function_">get</span>(<span class="string">&quot;canvas&quot;</span>).<span class="title function_">viewbox</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(viewBox);</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">      <span class="attr">inner</span>: &#123; <span class="attr">x</span>: oX, <span class="attr">y</span>: oY &#125;,</span><br><span class="line">      <span class="attr">x</span>: X,</span><br><span class="line">      <span class="attr">y</span>: Y,</span><br><span class="line">      scale</span><br><span class="line">    &#125; = viewBox;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> config = &#123;</span><br><span class="line">        <span class="attr">container</span>: bpmnCanvasRef.<span class="property">current</span>,</span><br><span class="line">        <span class="attr">width</span>: <span class="title class_">Math</span>.<span class="title function_">floor</span>((maxX - minX + <span class="number">62</span>) * scale),</span><br><span class="line">        <span class="attr">height</span>: <span class="title class_">Math</span>.<span class="title function_">floor</span>((maxY - minY + <span class="number">62</span>) * scale),</span><br><span class="line">        <span class="attr">radius</span>: <span class="number">40</span> * scale,</span><br><span class="line">        <span class="attr">maxOpacity</span>: <span class="number">0.8</span>,</span><br><span class="line">        <span class="attr">minOpacity</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">blur</span>: <span class="number">0.75</span>,</span><br><span class="line">        <span class="attr">onExtremaChange</span>: <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="title function_">setLegendExtrema</span>(data);</span><br><span class="line">          <span class="title function_">updateLegend</span>(data);</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 省略坐标计算... </span></span><br><span class="line"></span><br><span class="line">    heatmapData = &#123;</span><br><span class="line">     <span class="comment">// 取流程图的最大宽度，否则渲染会不完整</span></span><br><span class="line">        <span class="attr">max</span>: maxV,</span><br><span class="line">        <span class="attr">min</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">data</span>: points,</span><br><span class="line">      &#125;;</span><br><span class="line">     heatmapInstance = heatmap.<span class="title function_">create</span>(config);</span><br><span class="line">     heatmapInstance.<span class="title function_">setData</span>(heatmapData);</span><br><span class="line"></span><br><span class="line">  &#125;, []);</span><br></pre></td></tr></table></figure>
+<p>这样我们可以得到一个这样的图</p>
+<img width="946" alt="30 12 45 56" src="https://user-images.githubusercontent.com/25629121/170918846-dc895d1b-aaac-48f7-b9b1-39e1a922ee83.png">
+
+<p>但是因为我们画出来的是一个圆点，无法覆盖到一个矩形，那如果用更多的圆点呢？</p>
+<p>实践下来，用一行3个，3行一共9个圆点就可以实现完整的覆盖</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">shapePoints.<span class="title function_">push</span>(</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">1</span>) / <span class="number">2</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeX) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeW * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">y</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(shapeY) + <span class="title class_">Math</span>.<span class="title function_">floor</span>((shapeH * <span class="number">3</span>) / <span class="number">4</span>)),</span><br><span class="line">                <span class="attr">value</span>: runCount,</span><br><span class="line">              &#125;</span><br><span class="line">            );</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<img width="568" alt="iShot2022-05-30 12 51 48" src="https://user-images.githubusercontent.com/25629121/170919374-9f1c796f-a722-4dc3-b26a-253e13ce7a2a.png">
+
+<p>静态展示完成，接下来是解决拖动下的展示</p>
+<p>一开始，我想的是通过bpmn的事件监听来实现，可惜它并没有提供拖动相关的事件。</p>
+<p>那我就通过监听鼠标相关事件来实现，虽然在渲染图内部拖动没问题，可鼠标拖动着离开了渲染图或者浏览器外面，就会失去鼠标的坐标，导致下面这种情况的出现</p>
+<p><img src="https://user-images.githubusercontent.com/25629121/170919916-63e9d3a3-3d4c-436d-ad1d-6fbc5bb87293.gif" alt="iShot2022-05-30 12 27 33"></p>
+<p>又研究了一会，我发现bpmn的拖动是通过修改svg的<code>matrix</code>来实现的</p>
+<p><img src="https://user-images.githubusercontent.com/25629121/170921007-15aa7722-1fbd-4397-a13f-978748672328.gif" alt="iShot2022-05-30 13 04 17"></p>
+<p>那我就就来监听这个属性的改动来修改热力图的位置，这样即是鼠标移动到了浏览器外面也可以支持了。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;g.viewport&#x27;</span>)!;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> observerOptions = &#123;</span><br><span class="line">     <span class="attr">childList</span>: <span class="literal">false</span>,</span><br><span class="line">     <span class="attr">attributes</span>: <span class="literal">true</span>,</span><br><span class="line">     <span class="comment">// Omit (or set to false) to observe only changes to the parent node</span></span><br><span class="line">     <span class="attr">subtree</span>: <span class="literal">false</span>,</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="title function_">handleMouseDown</span>();</span><br><span class="line">   <span class="keyword">const</span> observer = (observerRef.<span class="property">current</span> = <span class="keyword">new</span> <span class="title class_">MutationObserver</span>(</span><br><span class="line">     <span class="function">(<span class="params">mutationList, observer</span>) =&gt;</span> &#123;</span><br><span class="line">       mutationList.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">         <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;item: &#x27;</span>, item);</span><br><span class="line">         <span class="keyword">if</span> (item.<span class="property">attributeName</span> === <span class="string">&#x27;transform&#x27;</span>) &#123;</span><br><span class="line">           <span class="keyword">if</span> (!mousePointRef.<span class="property">current</span>) &#123;</span><br><span class="line">             <span class="keyword">return</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">const</span> &#123; x, y &#125; = <span class="title function_">getTranslateXY</span>(item.<span class="property">target</span>);</span><br><span class="line">           <span class="keyword">const</span> offsetX =</span><br><span class="line">             x - mousePointRef.<span class="property">current</span>.<span class="property">x</span> + (heatmapOffsetRef.<span class="property">current</span>?.<span class="property">x</span> || <span class="number">0</span>);</span><br><span class="line">           <span class="keyword">const</span> offsetY =</span><br><span class="line">             y - mousePointRef.<span class="property">current</span>.<span class="property">y</span> + (heatmapOffsetRef.<span class="property">current</span>?.<span class="property">y</span> || <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">attr</span>(</span><br><span class="line">             <span class="title function_">query</span>(<span class="string">&#x27;.heatmap-canvas&#x27;</span>)!,</span><br><span class="line">             <span class="string">&#x27;style&#x27;</span>,</span><br><span class="line">             <span class="string">`</span></span><br><span class="line"><span class="string">                     position: absolute;</span></span><br><span class="line"><span class="string">                     left: <span class="subst">$&#123;offsetX&#125;</span>px;</span></span><br><span class="line"><span class="string">                     top: <span class="subst">$&#123;offsetY&#125;</span>px</span></span><br><span class="line"><span class="string">                   `</span></span><br><span class="line">           );</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">     &#125;</span><br><span class="line">   ));</span><br><span class="line">   observer.<span class="title function_">observe</span>(container, observerOptions);</span><br></pre></td></tr></table></figure>
+
+<p>最后的效果：</p>
+<p><img src="https://user-images.githubusercontent.com/25629121/170921144-6ff04b8e-ced4-4ee0-be4b-678c6fb71503.gif" alt="iShot2022-05-30 12 36 38"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这个热力图渲染有意思的地方是对热力关键点位置的计算，涉及了一些初中知识，让我一下子回味无穷。</p>
+<p>另外，其实大部分需求可以按照这样的一个过程去完成：</p>
+<p><img src="https://user-images.githubusercontent.com/25629121/170922097-36f54d19-2bc7-478e-8f4e-bd00b979fcd7.png" alt="image"></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/zenghongtu">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E9%81%87%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">初遇需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/4/&text=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/4/&is_video=false&description=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在流程图中实现 Camunda 企业付费版的热力图展示&body=Check out this article: https://blog.zenghongtu.com/4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/4/&title=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/4/&name=在流程图中实现 Camunda 企业付费版的热力图展示&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/4/&t=在流程图中实现 Camunda 企业付费版的热力图展示"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    Jason Zeng
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zenghongtu">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://lib.baomitu.com/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://lib.baomitu.com/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-96372784-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-96372784-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fbd1d453d3204739922289f06c5e1d7d"}'></script>
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'zenghongtu/blog-issue';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'boxy-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

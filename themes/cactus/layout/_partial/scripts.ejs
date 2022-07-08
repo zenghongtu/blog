@@ -125,10 +125,10 @@
     </script>
 <% } %>
 <!-- utterances Comments -->
-<% if (page.comments && theme.utterances.enabled && theme.utterances.repo && theme.utterances.issue_term && theme.utterances.theme){ %>
+<% if (page.comments && theme.utterances.enabled && theme.utterances.repo && theme.utterances.theme){ %>
     <script type="text/javascript">
       var utterances_repo = '<%= theme.utterances.repo %>';
-      var utterances_issue_term = '<%= theme.utterances.issue_term %>';
+      var utterances_issue_number = location.pathname.split("/")[1];
       var utterances_label = '<%= theme.utterances.label %>';
       var utterances_theme = '<%= theme.utterances.theme %>';
 
@@ -137,7 +137,7 @@
 
           script.src = 'https://utteranc.es/client.js';
           script.setAttribute('repo', utterances_repo);
-          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('issue-number', utterances_issue_number);
           script.setAttribute('label', utterances_label);
           script.setAttribute('theme', utterances_theme);
           script.setAttribute('crossorigin', 'anonymous');

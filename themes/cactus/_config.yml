@@ -149,8 +149,7 @@ disqus:
 # Fill in your Utterances data to enable Utterances comments
 utterances:
   enabled: true
-  repo: zenghongtu/blog-issue
-  issue_term: pathname
+  repo: zenghongtu/blog
   label: Comment
   theme: boxy-light
 

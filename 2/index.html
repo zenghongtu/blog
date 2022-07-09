@@ -9,7 +9,7 @@
     <meta name="description" content="在 Taro Hooks 出来 之后就一直想着体验一波 Hooks 小程序开发，不过一直忙着补番 😌。最近补完了，就搞了起来，开发了 20 天左右（其实大部分时间都在改 UI😒），基本上是完成了，然后也上架了，遂跟大家分享一点心得 😈 可以先扫描体验：  网络不稳定的小伙伴看预览：  在 GitHub Pro 的开发中，我写了四个 hooks，来帮助我提高开发效率  useRequest u">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Taro Hooks 快速开发一个小程序-- GitHub Pro">
-<meta property="og:url" content="https://blog.zenghongtu.com/2/index.html">
+<meta property="og:url" content="https://blog.jasonzeng.dev/2/index.html">
 <meta property="og:site_name" content="Zenghongtu&#39;s Blog">
 <meta property="og:description" content="在 Taro Hooks 出来 之后就一直想着体验一波 Hooks 小程序开发，不过一直忙着补番 😌。最近补完了，就搞了起来，开发了 20 天左右（其实大部分时间都在改 UI😒），基本上是完成了，然后也上架了，遂跟大家分享一点心得 😈 可以先扫描体验：  网络不稳定的小伙伴看预览：  在 GitHub Pro 的开发中，我写了四个 hooks，来帮助我提高开发效率  useRequest u">
 <meta property="og:locale" content="en_US">
@@ -95,17 +95,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/2/&text=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/2/&is_video=false&description=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&body=Check out this article: https://blog.zenghongtu.com/2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/2/&name=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/2/&t=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.jasonzeng.dev/2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.jasonzeng.dev/2/&text=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.jasonzeng.dev/2/&is_video=false&description=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&body=Check out this article: https://blog.jasonzeng.dev/2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.jasonzeng.dev/2/&name=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.jasonzeng.dev/2/&t=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -235,17 +235,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/2/&text=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/2/&is_video=false&description=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&body=Check out this article: https://blog.zenghongtu.com/2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/2/&name=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/2/&t=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.jasonzeng.dev/2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.jasonzeng.dev/2/&text=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.jasonzeng.dev/2/&is_video=false&description=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&body=Check out this article: https://blog.jasonzeng.dev/2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.jasonzeng.dev/2/&title=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.jasonzeng.dev/2/&name=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.jasonzeng.dev/2/&t=使用 Taro Hooks 快速开发一个小程序-- GitHub Pro"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

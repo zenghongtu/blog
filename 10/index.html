@@ -9,7 +9,7 @@
     <meta name="description" content="前言：Jest 很好很强大，但每次要在一个新项目中使用它都需要做足了前戏（配置）才能正常使用。这也是让许多开发吃了闭门羹，害怕用它，也不愿意去写测试。给大家推荐 umi-test和  Jest Run It 组合，希望你看完不再为这前戏犯难。  umi-testumi-test是在jest上面进行了一层封装，能够覆盖一些常见的js、ts场景测试，而不用再去写一个配置文件。 如果涉及到alias，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jest 的正确打开方式 -- umi-test &amp; Jest Run It">
-<meta property="og:url" content="https://blog.zenghongtu.com/10/index.html">
+<meta property="og:url" content="https://blog.jasonzeng.dev/10/index.html">
 <meta property="og:site_name" content="Zenghongtu&#39;s Blog">
 <meta property="og:description" content="前言：Jest 很好很强大，但每次要在一个新项目中使用它都需要做足了前戏（配置）才能正常使用。这也是让许多开发吃了闭门羹，害怕用它，也不愿意去写测试。给大家推荐 umi-test和  Jest Run It 组合，希望你看完不再为这前戏犯难。  umi-testumi-test是在jest上面进行了一层封装，能够覆盖一些常见的js、ts场景测试，而不用再去写一个配置文件。 如果涉及到alias，">
 <meta property="og:locale" content="en_US">
@@ -95,17 +95,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/10/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/10/&text=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/10/&is_video=false&description=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&body=Check out this article: https://blog.zenghongtu.com/10/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/10/&name=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/10/&t=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.jasonzeng.dev/10/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.jasonzeng.dev/10/&text=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.jasonzeng.dev/10/&is_video=false&description=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&body=Check out this article: https://blog.jasonzeng.dev/10/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.jasonzeng.dev/10/&name=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.jasonzeng.dev/10/&t=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -221,17 +221,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.zenghongtu.com/10/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.zenghongtu.com/10/&text=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.zenghongtu.com/10/&is_video=false&description=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&body=Check out this article: https://blog.zenghongtu.com/10/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.zenghongtu.com/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.zenghongtu.com/10/&name=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.zenghongtu.com/10/&t=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.jasonzeng.dev/10/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.jasonzeng.dev/10/&text=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.jasonzeng.dev/10/&is_video=false&description=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&body=Check out this article: https://blog.jasonzeng.dev/10/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.jasonzeng.dev/10/&title=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.jasonzeng.dev/10/&name=Jest 的正确打开方式 -- umi-test &amp; Jest Run It&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.jasonzeng.dev/10/&t=Jest 的正确打开方式 -- umi-test &amp; Jest Run It"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -10,11 +10,13 @@ jobs:
     if: ${{ github.actor == github.repository_owner }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: '16'    
-      - uses: zenghongtu/github-issue-to-hexo@v1.0.1
+      - uses: zenghongtu/github-issue-to-hexo@v1.1.0
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}

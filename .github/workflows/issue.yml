@@ -16,14 +16,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'    
-      - uses: zenghongtu/github-issue-to-hexo@v1.1.0
+      - uses: zenghongtu/github-issue-to-hexo@v2.0.0
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
-          issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          replace: true
-          output: './'
       - name: Commit report
         run: |
           git config --global user.name 'GitHub Action'
@@ -45,5 +42,5 @@ jobs:
           publish_dir: './public'
 
 concurrency: 
-  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  group: ${{ github.workflow }}
   cancel-in-progress: true   

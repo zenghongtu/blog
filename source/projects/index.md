@@ -9,7 +9,7 @@ title: My Projects
 👻在你的桌面放一个萌妹子，多一点乐趣😏~（支持Mac、Win和Linux）
 - [react-use-chinese](https://github.com/zenghongtu/react-use-chinese) (902⭐️)
 中文文档@react-use
-- [Remu](https://github.com/zenghongtu/Remu) (500⭐️)
+- [Remu](https://github.com/zenghongtu/Remu) (499⭐️)
 💥Chrome Extension for GitHub that view stars / star history / organizing starred repository
 - [vscode-asciiflow2](https://github.com/zenghongtu/vscode-asciiflow2) (383⭐️)
 Asciiflow in VS Code

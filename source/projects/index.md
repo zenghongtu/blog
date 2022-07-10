@@ -5,7 +5,7 @@ title: My Projects
 
 # My Projects
 
-- [PPet](https://github.com/zenghongtu/PPet) (1533⭐️)
+- [PPet](https://github.com/zenghongtu/PPet) (1535⭐️)
 👻在你的桌面放一个萌妹子，多一点乐趣😏~（支持Mac、Win和Linux）
 - [react-use-chinese](https://github.com/zenghongtu/react-use-chinese) (902⭐️)
 中文文档@react-use
@@ -13,7 +13,7 @@ title: My Projects
 💥Chrome Extension for GitHub that view stars / star history / organizing starred repository
 - [vscode-asciiflow2](https://github.com/zenghongtu/vscode-asciiflow2) (383⭐️)
 Asciiflow in VS Code
-- [saladict-desktop](https://github.com/zenghongtu/saladict-desktop) (319⭐️)
+- [saladict-desktop](https://github.com/zenghongtu/saladict-desktop) (320⭐️)
 ✨✨桌面划词与翻译工具，聚合了 N 多词典，功能强大，支持 Windows 、 Mac 和 Linux。
 - [GitHub-Pro](https://github.com/zenghongtu/GitHub-Pro) (127⭐️)
 一个简洁、强大的 GitHub 小程序客户端，基于 Taro 和 TypeScript。

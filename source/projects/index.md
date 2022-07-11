@@ -5,7 +5,7 @@ title: My Projects
 
 # My Projects
 
-- [PPet](https://github.com/zenghongtu/PPet) (1535⭐️)
+- [PPet](https://github.com/zenghongtu/PPet) (1536⭐️)
 👻在你的桌面放一个萌妹子，多一点乐趣😏~（支持Mac、Win和Linux）
 - [react-use-chinese](https://github.com/zenghongtu/react-use-chinese) (902⭐️)
 中文文档@react-use

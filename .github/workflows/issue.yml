@@ -3,6 +3,8 @@ on:
   issues:
     # Sufficient to trigger this workflow when an issue is unlabeled, labeled, edited, milestoned
     types: [unlabeled, labeled, edited, milestoned]
+  workflow_dispatch:
+  
 
 jobs:
   build:

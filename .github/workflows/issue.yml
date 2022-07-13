@@ -23,16 +23,6 @@ jobs:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit report
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'noreply@github.com'
-          git add .
-          git commit -m "update posts"
-          # use latest
-          git push -f
-        env:
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
       - name: Install Dependencies
         run: yarn install
       - name: Build

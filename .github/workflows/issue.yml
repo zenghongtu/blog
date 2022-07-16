@@ -23,15 +23,25 @@ jobs:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Dependencies
-        run: yarn install
-      - name: Build
-        run: yarn run build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: './public'
+      - name: Commit report
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'noreply@github.com'
+          git pull
+          git add .
+          git commit -m "update posts"
+          git push
+        env:
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      # - name: Install Dependencies
+      #   run: yarn install
+      # - name: Build
+      #   run: yarn run build
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: './public'
 
 concurrency: 
   group: ${{ github.workflow }}

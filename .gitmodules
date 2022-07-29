@@ -1,4 +1,0 @@
-[submodule "themes/cactus"]
-	path = themes/cactus
-	url = https://github.com/zenghongtu/hexo-theme-cactus
-	branch = master

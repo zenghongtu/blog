@@ -1,3 +1,4 @@
 [submodule "themes/fluid"]
 	path = themes/fluid
-	url = git@github.com:zenghongtu/hexo-theme-fluid.git
+	url = https://github.com/zenghongtu/hexo-theme-fluid
+	branch = master

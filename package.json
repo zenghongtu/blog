@@ -23,7 +23,7 @@
 		"hexo-renderer-stylus": "^2.1.0",
 		"hexo-server": "^3.0.0",
 		"hexo-theme-landscape": "^0.0.3",
-		"octokit": "^2.0.2"
+		"octokit": "^2.0.5"
 	},
 	"devDependencies": {
 		"@types/node": "^18.0.3",

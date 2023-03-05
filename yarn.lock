@@ -1089,12 +1089,12 @@ hexo-fs@^3.0.1, hexo-fs@^3.1.0:
     graceful-fs "^4.1.11"
     hexo-util "^2.0.0"
 
-hexo-generator-archive@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hexo-generator-archive/-/hexo-generator-archive-1.0.0.tgz#ad2afb12232a65e2f8608fc1ca3f19162fb63786"
-  integrity sha512-24TeanDGpMBUIq37DHpSESQbeN6ssZ06edsGSI76tN4Yit50TgsgzP5g5DSu0yJk0jUtHJntysWE8NYAlFXibA==
+hexo-generator-archive@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-generator-archive/-/hexo-generator-archive-2.0.0.tgz#bd93f17848843bb5bface81103d81f5be1a8b2c9"
+  integrity sha512-KikJk7dGFbtNHOgqtLFGf5T/S8n1paGp+Gy0KfVDz+HKYhGbXOouyiZkmc3O9KrYt6ja14rmkMhq7KKGtvfehw==
   dependencies:
-    hexo-pagination "1.0.0"
+    hexo-pagination "3.0.0"
 
 hexo-generator-category@^2.0.0:
   version "2.0.0"

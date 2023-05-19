@@ -1607,10 +1607,10 @@ nwsapi@^2.2.2:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.2.tgz#e5418863e7905df67d51ec95938d67bf801f0bb0"
   integrity sha512-90yv+6538zuvUMnN+zCr8LuV6bPFdq50304114vJYJ8RDyK8D5O9Phpbd6SZWgI7PwzmmfN1upeOJlvybDSgCw==
 
-octokit@^2.0.14:
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/octokit/-/octokit-2.0.14.tgz#e2057097a6c9cac3e7724a4365b450b7c694a6a4"
-  integrity sha512-z6cgZBFxirpFEQ1La8Lg83GCs5hOV2EPpkYYdjsGNbfQMv8qUGjq294MiRBCbZqLufviakGsPUxaNKe3JrPmsA==
+octokit@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/octokit/-/octokit-2.0.15.tgz#49fab802bcf64efb2b02af5b3d53a03fb08d9358"
+  integrity sha512-09cuprsI3sGsCY+MKfbl1GI7UWxwxaHIoR2gtkPc8iYHaD1PF2AtUe+gc4kndzfBFk8tD+XbD6jdSfnBvLvqdA==
   dependencies:
     "@octokit/app" "^13.1.1"
     "@octokit/core" "^4.0.4"
